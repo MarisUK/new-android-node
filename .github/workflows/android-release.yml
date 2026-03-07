@@ -16,14 +16,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Grant execute permission for Gradlew
-      run: |
-        if [ -f "./gradlew" ]; then
-          chmod +x ./gradlew
-        else
-          echo "Error: ./gradlew not found"
-          exit 1
-        fi
+    - name: Ensure Gradlew is executable
+      run: chmod +x ./gradlew
 
     - name: Set up JDK
       uses: actions/setup-java@v4
