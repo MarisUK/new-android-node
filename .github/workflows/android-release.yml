@@ -22,21 +22,21 @@ jobs:
         distribution: 'temurin'
         java-version: '11'
 
-    - name: Build with Gradle
-      run: ./gradlew clean assembleRelease
+    - name: Build and Test
+      run: |
+        ./gradlew clean test assembleRelease bundleRelease
 
-    - name: Run Tests
-      run: ./gradlew test
-
-    - name: Sign APK
+    - name: Sign Bundle
       env:
         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-      run: ./gradlew assembleRelease
+      run: ./gradlew :app:signingReport
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v2
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
       with:
-        name: app-release.apk
-        path: app/build/outputs/apk/release/app-release.apk
+        name: app-artifacts
+        path: |
+          app/build/outputs/apk/release/app-release.apk
+          app/build/outputs/bundle/release/app-release.aab
