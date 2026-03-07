@@ -10,12 +10,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: 'ubuntu-latest'
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
+    
     - name: Ensure Gradlew is executable
       run: |
         if [ ! -f ./gradlew ]; then
@@ -35,7 +35,7 @@ jobs:
       run: |
         echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > chatapp.keystore
 
-    - name: Build and Sign
+    - name: Build and Sign APK
       env:
         KEYSTORE_PATH: chatapp.keystore
         KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -48,10 +48,27 @@ jobs:
           -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
           -Pandroid.injected.signing.key.password=$KEY_PASSWORD
 
-    - name: Upload Artifacts
+    - name: Build and Sign AAB
+      env:
+        KEYSTORE_PATH: chatapp.keystore
+        KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      run: |
+        ./gradlew bundleRelease --no-daemon --warning-mode all \
+          -Pandroid.injected.signing.store.file=$KEYSTORE_PATH \
+          -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
+          -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
+          -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+
+    - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
-        name: app-artifacts
-        path: |
-          app/build/outputs/apk/release/app-release.apk
-          app/build/outputs/bundle/release/app-release.aab
+        name: app-release-APK
+        path: app/build/outputs/apk/release/app-release.apk
+
+    - name: Upload AAB artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release-AAB
+        path: app/build/outputs/bundle/release/app-release.aab
