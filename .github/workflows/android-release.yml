@@ -32,7 +32,7 @@ jobs:
 
     - name: Set Java Toolchain and Version Consistency
       run: |
-        ./gradlew -p app javaToolchains --no-daemon
+        ./gradlew -p app javaToolchains --warning-mode all
 
     - name: Decode Keystore
       id: decode-keystore
@@ -46,7 +46,7 @@ jobs:
         KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       run: |
-        ./gradlew clean assembleRelease --no-daemon --warning-mode all \
+        ./gradlew clean assembleRelease --warning-mode all \
           -Pandroid.injected.signing.store.file=$KEYSTORE_PATH \
           -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
           -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
@@ -59,7 +59,7 @@ jobs:
         KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       run: |
-        ./gradlew bundleRelease --no-daemon --warning-mode all \
+        ./gradlew bundleRelease --warning-mode all \
           -Pandroid.injected.signing.store.file=$KEYSTORE_PATH \
           -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
           -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
