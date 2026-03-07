@@ -14,8 +14,13 @@ SET MAX_HEAP_SIZE=
 REM Use the predefined JVM options not covered by versioning (e.g. -Xms, -Xmx, etc.)
 SET JVM_OPTS=
 
-REM Use the default gradle installation folder
-IF "%GRADLE_HOME%"=="" SET GRADLE_HOME=C:\Gradle
+REM Use the Gradle wrapper
+IF "%GRADLE_HOME%"=="" SET GRADLE_HOME=%~dp0\..\..\gradle
+
+SET CLASSPATH=
+IF EXIST "%GRADLE_HOME%\gradle\wrapper\gradle-wrapper.jar" (
+    SET CLASSPATH=%CLASSPATH%;%GRADLE_HOME%\gradle\wrapper\gradle-wrapper.jar
+)
 
 REM Determine the operating system
 FOR /f "tokens=*" %%i IN ('ver') DO SET SYSTEM_VER=%%i
