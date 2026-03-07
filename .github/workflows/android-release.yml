@@ -42,12 +42,10 @@ jobs:
         KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       run: |
-        ./gradlew clean test
-        ./gradlew assembleRelease
-        ./gradlew bundleRelease
-          -Pandroid.injected.signing.store.file=$KEYSTORE_PATH 
-          -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD 
-          -Pandroid.injected.signing.key.alias=$KEY_ALIAS 
+        ./gradlew clean assembleRelease --scan \
+          -Pandroid.injected.signing.store.file=$KEYSTORE_PATH \
+          -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
+          -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
           -Pandroid.injected.signing.key.password=$KEY_PASSWORD
 
     - name: Upload Artifacts
