@@ -1,22 +1,12 @@
-buildscript {
-    ext.kotlin_version = "1.7.10"
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.2.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${'$'}kotlin_version")
-    }
+plugins {
+    kotlin("jvm") version "1.7.10"
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+repositories {
+    google()
+    mavenCentral()
 }
 
-task<Delete>("clean") {
-    delete(rootProject.buildDir)
+dependencies {
+    implementation(kotlin("stdlib"))
 }
