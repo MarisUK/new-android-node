@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    kotlin("android") version "1.9.10"
+    kotlin("android") version "1.9.20"
 }
 
 android {
@@ -45,7 +45,7 @@ android {
     }
 
     dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10") 
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20") 
         implementation("androidx.core:core-ktx:1.9.0")
         implementation("androidx.appcompat:appcompat:1.5.0")
         implementation("com.google.android.material:material:1.5.0")
