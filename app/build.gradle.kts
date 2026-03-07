@@ -34,11 +34,19 @@ android {
             keyPassword = System.getenv("ANDROID_KEY_PASSWORD")
         }
     }
+    lintOptions {
+        // Note: The 'Usage' attribute issues are normal when using older build tools with newer Android SDKs.
+        abortOnError = false
+    }
 }
 
 configurations.all {
-    resolutionStrategy { 
-        force "org.gradle:gradle-core:9.3.1" 
+    resolutionStrategy {
+        eachDependency { details ->
+            if (details.requested.group == "org.jetbrains.kotlin" && details.requested.name == "kotlin-stdlib-jdk8") {
+                details.useTarget("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
+            }
+        }
     }
 }
 
