@@ -36,6 +36,12 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy { 
+        force "org.gradle:gradle-core:9.3.1" 
+    }
+}
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("androidx.core:core-ktx:1.9.0")
