@@ -34,28 +34,36 @@ android {
             keyPassword = System.getenv("ANDROID_KEY_PASSWORD")
         }
     }
+
     lintOptions {
-        // Note: The 'Usage' attribute issues are normal when using older build tools with newer Android SDKs.
         abortOnError = false
     }
-}
 
-configurations.all {
-    resolutionStrategy {
-        eachDependency { details ->
-            if (details.requested.group == "org.jetbrains.kotlin" && details.requested.name == "kotlin-stdlib-jdk8") {
-                details.useTarget("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
+    configurations.all {
+        resolutionStrategy {
+            eachDependency { details ->
+                if (details.requested.group == "org.jetbrains.kotlin" && details.requested.name.startsWith("kotlin-stdlib")) {
+                    details.useTarget("org.jetbrains.kotlin:kotlin-stdlib:1.5.31")
+                }
             }
         }
     }
-}
 
-dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.5.0")
-    implementation("com.google.android.material:material:1.5.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+    dependencies {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
+        implementation("androidx.core:core-ktx:1.9.0")
+        implementation("androidx.appcompat:appcompat:1.5.0")
+        implementation("com.google.android.material:material:1.5.0")
+        testImplementation("junit:junit:4.13.2")
+        androidTestImplementation("androidx.test.ext:junit:1.1.5")
+        androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+    }
+
+    attributesSchema {
+        attributeUsage {
+            alias "java-api" to "java-api-jars"
+            alias "java-runtime" to "java-runtime-jars"
+            attribute "LibraryElements" withValues "jar"
+        }
+    }
 }

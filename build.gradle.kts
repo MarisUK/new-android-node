@@ -11,3 +11,8 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 }
+
+// Neizmantot eksplicitā "SelfResolvingDependency"
+configurations.all {
+    resolutionStrategy.force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
+}
