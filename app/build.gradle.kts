@@ -35,12 +35,17 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
     lintOptions {
         abortOnError = false
     }
 
     dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10") 
         implementation("androidx.core:core-ktx:1.9.0")
         implementation("androidx.appcompat:appcompat:1.5.0")
         implementation("com.google.android.material:material:1.5.0")
