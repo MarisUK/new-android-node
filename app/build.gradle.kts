@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "lv.mcore.app"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -40,9 +40,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    lintOptions {
-        abortOnError = false
-    }
+    namespace = "lv.mcore.app" // Gradle 9.3.1 jauna prasība 
 
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20") 
