@@ -66,4 +66,10 @@ android {
             attribute "LibraryElements" withValues "jar"
         }
     }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    }
 }

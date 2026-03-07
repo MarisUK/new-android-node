@@ -30,6 +30,10 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    - name: Set Java Toolchain and Version Consistency
+      run: |
+        ./gradlew -p app javaToolchains --no-daemon
+
     - name: Decode Keystore
       id: decode-keystore
       run: |
