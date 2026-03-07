@@ -1,7 +1,10 @@
-name: Android Release
+name: Android CI/CD
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
     branches:
       - main
 
@@ -19,11 +22,21 @@ jobs:
         distribution: 'temurin'
         java-version: '11'
 
-    - name: Build debug APK
-      run: ./gradlew assembleDebug
+    - name: Build with Gradle
+      run: ./gradlew clean assembleRelease
 
-    - name: Build release APK
+    - name: Run Tests
+      run: ./gradlew test
+
+    - name: Sign APK
+      env:
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
       run: ./gradlew assembleRelease
 
-    - name: Build release AAB
-      run: ./gradlew bundleRelease
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-release.apk
+        path: app/build/outputs/apk/release/app-release.apk
