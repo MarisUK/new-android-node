@@ -25,16 +25,23 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build and Test
+    - name: Decode Keystore
+      id: decode-keystore
       run: |
-        ./gradlew clean test assembleRelease bundleRelease
+        echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > chatapp.keystore
 
-    - name: Sign Bundle
+    - name: Build and Sign
       env:
-        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-      run: ./gradlew :app:signingReport
+        KEYSTORE_PATH: chatapp.keystore
+        KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      run: |
+        ./gradlew clean test assembleRelease bundleRelease \
+          -Pandroid.injected.signing.store.file=$KEYSTORE_PATH \
+          -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
+          -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
+          -Pandroid.injected.signing.key.password=$KEY_PASSWORD
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
