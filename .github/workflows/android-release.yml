@@ -17,7 +17,13 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Ensure Gradlew is executable
-      run: chmod +x ./gradlew
+      working-directory: ./
+      run: |
+        if [ ! -f ./gradlew ]; then
+          echo "gradlew file not found. Please check the project directory."
+          exit 1
+        fi
+        chmod +x ./gradlew
 
     - name: Set up JDK
       uses: actions/setup-java@v4
