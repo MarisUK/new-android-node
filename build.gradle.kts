@@ -1,11 +1,12 @@
 plugins {
-    kotlin("jvm") version "1.10.0"
+    kotlin("jvm") version "1.8.21" // Atjaunināta uz pieejamu Kotlin versiju
     java
 }
 
 repositories {
     google()
     mavenCentral()
+    // Ja nepieciešams, var pievienot vēl citas krātuves te
 }
 
 dependencies {
