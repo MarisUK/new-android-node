@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    kotlin("android") version "1.10.0"  // Jaunākā stabilā versija
+    kotlin("android") version "1.10.0"  // Piemērots Kotlin plug-in
 }
 
 android {
@@ -48,7 +48,7 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.10.0") // Piemērots kotlin-stdlib
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.21")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.5.0")
     implementation("com.google.android.material:material:1.5.0")
