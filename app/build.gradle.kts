@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    kotlin("android") version "1.10.0"  // Piemērots Kotlin plug-in
+    kotlin("android") version "1.10.0"
 }
 
 android {
@@ -42,6 +42,23 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    attributesSchema {
+        attribute(Usage.USAGE_ATTRIBUTE) {
+            compatibilityRules.add { details ->
+                details.compatibleWith("java-api") { details.consumerValue.name == "java-api-jars" }
+                details.compatibleWith("java-runtime") { details.consumerValue.name == "java-runtime-jars" }
+            }
+            disambiguationRules.add { details ->
+                if (details.consumerValue.name.startsWith("java-api")) {
+                    details.closestMatch("java-api")
+                }
+                if (details.consumerValue.name.startsWith("java-runtime")) {
+                    details.closestMatch("java-runtime")
+                }
+            }
+        }
     }
 
     namespace = "lv.mcore.app"
