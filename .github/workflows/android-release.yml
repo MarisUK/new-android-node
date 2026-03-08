@@ -32,7 +32,7 @@ jobs:
 
     - name: Ensure Java Toolchain is correct
       run: |
-        ./gradlew - 9.3.1
+        ./gradlew --version
 
     - name: Decode Keystore
       id: decode-keystore
