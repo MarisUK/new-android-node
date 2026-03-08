@@ -46,21 +46,13 @@ android {
 
     configurations.all {
         resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == "org.gradle" && details.requested.name == "api") {
-                details.useTarget("java-api") {
-                    because("Use modern Usage attribute in Gradle 9.3.1.")
-                }
-            } else if (details.requested.group == "org.gradle" && details.requested.name == "runtime") {
-                details.useTarget("java-runtime") {
-                    because("Use modern Usage attribute in Gradle 9.3.1.")
-                }
-            }
-            details.with {
-                print("Add LibraryElements attribute")
-                LibraryElements elements = [value: 'jar']
+            if (details.requested.group == "org.gradle" && details.requested.name.contains("module")) {
+                details.useVersion("latest.release")
+                details.because("Upgrade to latest version as older usage is deprecated")
             }
         }
     }
+
     namespace = "lv.mcore.app"
 }
 

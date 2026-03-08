@@ -15,11 +15,11 @@ dependencies {
 }
 
 configurations.all {
-    resolutionStrategy.dependencySubstitution.all { 
-        useTarget(module("java-api")).because("Replacing deprecated Java Usages")
-    }
-    resolutionStrategy.dependencySubstitution.all { 
-        useTarget(module("java-runtime")).because("Replacing deprecated Java Runtime Usages")
+    resolutionStrategy.dependencySubstitution.all {
+        if (requested.module.group == "org.gradle") {
+            useTarget("latest.release")
+            because("Replacement with latest version due to deprecation.")
+        }
     }
 }
 
