@@ -18,4 +18,4 @@ if [ -z "$GRADLE_HOME" ]; then
   fi
 fi
 
-exec "$GRADLE_HOME/bin/gradle" "--daemon" "$@"
+exec "$GRADLE_HOME/bin/gradle" "--no-daemon" "$@"
