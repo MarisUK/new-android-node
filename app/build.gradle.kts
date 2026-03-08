@@ -50,23 +50,10 @@ android {
                 details.compatibleWith("java-api") { details.consumerValue.name == "java-api" }
                 details.compatibleWith("java-runtime") { details.consumerValue.name == "java-runtime" }
             }
-            disambiguationRules.add { details ->
-                if (details.consumerValue.name == "java-api") {
-                    details.closestMatch("java-api")
-                }
-                if (details.consumerValue.name == "java-runtime") {
-                    details.closestMatch("java-runtime")
-                }
-            }
         }
         attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE) {
             compatibilityRules.add { details ->
                 details.compatibleWith("jar") { details.consumerValue.name == "jar" }
-            }
-            disambiguationRules.add { details ->
-                if (details.consumerValue.name == "jar") {
-                    details.closestMatch("jar")
-                }
             }
         }
     }
