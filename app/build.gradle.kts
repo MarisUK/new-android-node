@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    kotlin("android") version "1.10.0"
+    kotlin("android") version "1.9.22"
 }
 
 android {
@@ -55,14 +55,12 @@ android {
                     because("Use modern Usage attribute in Gradle 9.3.1.")
                 }
             }
-            
-            details.with { 
+            details.with {
                 print("Add LibraryElements attribute")
                 LibraryElements elements = [value: 'jar']
             }
         }
     }
-    
     namespace = "lv.mcore.app"
 }
 
