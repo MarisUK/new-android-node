@@ -51,10 +51,10 @@ android {
                 details.compatibleWith("java-runtime") { details.consumerValue.name == "java-runtime" }
             }
             disambiguationRules.add { details ->
-                if (details.consumerValue.name.startsWith("java-api")) {
+                if (details.consumerValue.name == "java-api") {
                     details.closestMatch("java-api")
                 }
-                if (details.consumerValue.name.startsWith("java-runtime")) {
+                if (details.consumerValue.name == "java-runtime") {
                     details.closestMatch("java-runtime")
                 }
             }
