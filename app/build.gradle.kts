@@ -44,16 +44,12 @@ android {
         jvmTarget = "17"
     }
 
-    attributesSchema {
-        attribute(Usage.USAGE_ATTRIBUTE) {
-            compatibilityRules.add { details ->
-                details.compatibleWith("java-api") { details.consumerValue.name == "java-api" }
-                details.compatibleWith("java-runtime") { details.consumerValue.name == "java-runtime" }
-            }
-        }
-        attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE) {
-            compatibilityRules.add { details ->
-                details.compatibleWith("jar") { details.consumerValue.name == "jar" }
+    configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == "org.gradle" && details.requested.name == "api") {
+                details.useTarget "java-api"
+            } else if (details.requested.group == "org.gradle" && details.requested.name == "runtime") {
+                details.useTarget "java-runtime"
             }
         }
     }
